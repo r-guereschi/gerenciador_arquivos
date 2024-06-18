@@ -104,6 +104,7 @@ def main():
     root.title("Gerenciador de Fotos")
     root.geometry("400x400")
     root.configure(bg='#e0e0e0')  # cor de fundo cinza claro
+    root.resizable(False, False)  # Bloqueia o redimensionamento da janela
 
     title_label = tk.Label(root, text="Gerenciador de Fotos", bg='#e0e0e0', fg='black', font=('Helvetica', 18, 'bold'))
     title_label.pack(pady=20)
