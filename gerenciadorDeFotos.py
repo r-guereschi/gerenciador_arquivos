@@ -3,6 +3,7 @@ import re
 import shutil
 import tkinter as tk
 from tkinter import filedialog, simpledialog, messagebox
+import webbrowser
 
 def select_folder():
     folder_selected = filedialog.askdirectory()
@@ -95,23 +96,36 @@ def on_move():
     
     move_photos_and_delete_subfolders(main_folder)
 
+def open_instagram(event):
+    webbrowser.open_new("https://www.instagram.com/r.guereschi_fotografia/")
+
 def main():
     root = tk.Tk()
     root.title("Gerenciador de Fotos")
     root.geometry("400x400")
-    root.configure(bg='white')
+    root.configure(bg='#e0e0e0')  # cor de fundo cinza claro
 
-    title_label = tk.Label(root, text="Gerenciador de Fotos", bg='white', fg='black', font=('Helvetica', 18, 'bold'))
+    title_label = tk.Label(root, text="Gerenciador de Fotos", bg='#e0e0e0', fg='black', font=('Helvetica', 18, 'bold'))
     title_label.pack(pady=20)
 
-    button_style = {'bg': 'black', 'fg': 'white', 'font': ('Helvetica', 12, 'bold'), 'padx': 20, 'pady': 10}
+    button_style = {'bg': '#0077cc', 'fg': 'white', 'font': ('Helvetica', 12, 'bold'), 'padx': 20, 'pady': 10, 'bd': 0}
 
-    tk.Button(root, text="Renomear Fotos", command=on_rename, **button_style).pack(pady=10)
-    tk.Button(root, text="Dividir Fotos em Subpastas", command=on_divide, **button_style).pack(pady=10)
-    tk.Button(root, text="Remover Subpastas e Mover Fotos", command=on_move, **button_style).pack(pady=10)
+    # Função para criar uma imagem oval para usar como imagem de fundo dos botões
+    def create_circle_button(color, width, height):
+        image = tk.PhotoImage(width=width, height=height)
+        image.put(color, to=(0, 0, width, height))
+        return image
     
-    footer_label = tk.Label(root, text="@r.guereschi_", bg='white', fg='black', font=('Helvetica', 10))
+    oval_image = create_circle_button('#0077cc', 200, 40)
+
+    # Botões com a imagem de fundo oval
+    tk.Button(root, text="Renomear Fotos", image=oval_image, compound=tk.CENTER, command=on_rename, **button_style).pack(pady=10)
+    tk.Button(root, text="Dividir Fotos em Subpastas", image=oval_image, compound=tk.CENTER, command=on_divide, **button_style).pack(pady=10)
+    tk.Button(root, text="Remover Subpastas e Mover Fotos", image=oval_image, compound=tk.CENTER, command=on_move, **button_style).pack(pady=10)
+    
+    footer_label = tk.Label(root, text="@r.guereschi_fotografia", bg='#e0e0e0', fg='black', font=('Helvetica', 10, 'underline'))
     footer_label.pack(side=tk.BOTTOM, pady=10)
+    footer_label.bind("<Button-1>", open_instagram)
 
     root.mainloop()
 
